@@ -1,6 +1,6 @@
 
-export class BaseResultDto {
+export interface BaseResultDto<T> {
   success: boolean;
   message: string;
-  data: any;
+  data: T | null;
 }

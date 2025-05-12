@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { ProductService } from "../services/product.service";
+import { CategoryService } from "../services/category.service";
 import { BaseResultDto } from "../dtos/base-result.dto";
 import { validationResult } from "express-validator";
-import { CreateProductDto } from "../dtos/create-product.dto";
+import { CreateCategoryDto } from "../dtos/create-category.dto";
 import { BaseErrorResponse } from "../contracts/base-error-response";
 
-export class ProductController {
+export class CategoryController {
 
-  constructor(private readonly productService: ProductService) {
+  constructor(private readonly categoryService: CategoryService) {
   }
 
   public async getAll(req: Request, res: Response) {
     try {
-      const result = await this.productService.getAll();
+      const result = await this.categoryService.getAll();
 
       res.status(200).send(result.data);        
     } 
@@ -24,11 +24,10 @@ export class ProductController {
 
   public async getByGuid(req: Request, res: Response) {
     try {
-      const result = await this.productService.getByGuid(req.params.guid);
+      const result = await this.categoryService.getByGuid(req.params.guid);
 
       if(result.success === false) {
         res.status(404).send();
-        return;
       }
 
       res.status(200).send(result.data);        
@@ -51,16 +50,11 @@ export class ProductController {
       }
 
       const data = {
-        categoryId: req.body.categoryId,
         name: req.body.name,
-        description: req.body.description,
-        status: req.body.status,
-        price: req.body.price,
-        quantity: req.body.quantity,
-      } as CreateProductDto;
+      } as CreateCategoryDto;
 
-      const result = await this.productService.create(data);
-
+      const result = await this.categoryService.create(data);
+  
       if(result.success === false) {
         const response = { code: 400, message: result.message } as BaseErrorResponse;
         res.status(400).send(response);
@@ -87,15 +81,10 @@ export class ProductController {
       }
 
       const data = {
-        categoryId: req.body.categoryId,
         name: req.body.name,
-        description: req.body.description,
-        status: req.body.status,
-        price: req.body.price,
-        quantity: req.body.quantity,
-      } as CreateProductDto;
+      } as CreateCategoryDto;
 
-      const result = await this.productService.update(req.params.guid, data);
+      const result = await this.categoryService.update(req.params.guid, data);
   
       if(result.success === false) {
         const response = { code: 400, message: result.message } as BaseErrorResponse;
@@ -113,7 +102,7 @@ export class ProductController {
 
   public async delete(req: Request, res: Response) {
     try {
-      const result = await this.productService.delete(req.params.guid);
+      const result = await this.categoryService.delete(req.params.guid);
 
       res.status(200).send(result.data);        
     } 

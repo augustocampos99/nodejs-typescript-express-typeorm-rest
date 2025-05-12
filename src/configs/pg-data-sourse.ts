@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm"
 import { ProductEntity } from "../entities/product.entity"
 import { environment } from "../environments/develop.env";
+import { CategoryEntity } from "../entities/category.entity";
 
 export const pgSQLDataSource = new DataSource({
     type: "postgres",
@@ -12,6 +13,7 @@ export const pgSQLDataSource = new DataSource({
     logging: true,
     synchronize: false,
     entities: [
-      ProductEntity, 
+      ProductEntity,
+      CategoryEntity
     ],
 });

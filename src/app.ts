@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import "reflect-metadata"
 import { pgSQLDataSource } from "./configs/pg-data-sourse";
 import productRouter from "./routers/product.router";
+import categoryRouter from "./routers/category.router";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 
 // Routers
 app.use(productRouter);
+app.use(categoryRouter);
 
 
 app.listen(port, () => {

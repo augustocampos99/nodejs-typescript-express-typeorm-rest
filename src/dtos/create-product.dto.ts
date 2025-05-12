@@ -1,5 +1,5 @@
 
-export class CreateProductDto {
+export interface CreateProductDto {
   categoryId: number;
   name: string;
   description: string;
