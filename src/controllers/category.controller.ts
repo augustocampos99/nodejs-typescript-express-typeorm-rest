@@ -86,6 +86,11 @@ export class CategoryController {
 
       const result = await this.categoryService.update(req.params.guid, data);
   
+      if(result.success === false && result.message.length === 0) {
+        res.status(404).send();
+        return;
+      }
+  
       if(result.success === false) {
         const response = { code: 400, message: result.message } as BaseErrorResponse;
         res.status(400).send(response);

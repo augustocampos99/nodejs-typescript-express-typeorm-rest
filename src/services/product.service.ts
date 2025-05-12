@@ -60,14 +60,14 @@ export class ProductService {
 
   public async update(guid: string, productDto: CreateProductDto): Promise<BaseResultDto<ProductEntity>> {
     try {
+      let product = await pgSQLDataSource.getRepository(ProductEntity).findOneBy({ guid: guid });
+      if(product === null) {
+        return { success: false, message: "", data: null } as BaseResultDto<ProductEntity>;
+      }
+
       let category = await pgSQLDataSource.getRepository(CategoryEntity).findOneBy({ id: productDto.categoryId });
       if(category === null) {
         return { success: false, message: "Category not found", data: null } as BaseResultDto<ProductEntity>;
-      }
-
-      let product = await pgSQLDataSource.getRepository(ProductEntity).findOneBy({ guid: guid });
-      if(product === null) {
-        return { success: false, message: "Product not found", data: null } as BaseResultDto<ProductEntity>;
       }
 
       product.categoryId = productDto.categoryId;
