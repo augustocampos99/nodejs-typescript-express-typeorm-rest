@@ -13,10 +13,6 @@ export class ProductController {
     try {
       const result = await this.productService.getAll();
 
-      if(result === null || result.length === 0) {
-        res.status(204).send();
-      }
-
       const response: BaseResultDto = { success: true, message: "", data: result };
       res.status(200).send(response);        
     } 
